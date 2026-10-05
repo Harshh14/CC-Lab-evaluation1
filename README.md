@@ -137,3 +137,15 @@ The measurements were collected for all five workload levels.
 | W3 | 4 | 200 | 200 | 0 | 16.52 | 238.17 | 15.42 | 0.69 |
 | W4 | 8 | 400 | 400 | 0 | 29.95 | 264.81 | 71.03 | 0.71 |
 | W5 | 16 | 800 | 800 | 0 | 57.62 | 275.32 | 35.91 | 0.70 |
+
+## 12. Conclusion
+
+The Containerized Microservices Architecture successfully demonstrates the development, deployment, communication, and performance evaluation of a multi-service application.
+
+The system consists of three independent Flask microservices: Student Service, Course Service, and Enrollment Service. Each service was containerized using Docker and deployed together using Docker Compose. The services communicate through a Docker Compose network using service names and REST APIs, with the Enrollment Service acting as the integration layer.
+
+The application was tested using five workload levels: 1, 2, 4, 8, and 16 concurrent requests, with 50 requests generated per worker. The performance evaluation measured average response time, throughput, successful and failed requests, CPU utilization, and memory utilization.
+
+The results showed that average response time increased as concurrency increased, while throughput improved initially and gradually approached a plateau at higher workloads. CPU utilization varied according to workload, while memory utilization remained relatively stable. Across all tested workloads, 1,550 requests were processed successfully with zero failures.
+
+Overall, the project demonstrates how Docker and Docker Compose can be used to build and deploy independent microservices while providing a practical way to evaluate system performance under increasing workloads.
