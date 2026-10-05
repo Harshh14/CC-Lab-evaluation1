@@ -1,310 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Student Service | Microservice</title>
+    <title>Student Service</title>
 
     <style>
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            font-family: "Segoe UI", Arial, sans-serif;
-            background:
-                radial-gradient(circle at 10% 20%, rgba(0, 140, 255, 0.12), transparent 30%),
-                radial-gradient(circle at 90% 80%, rgba(0, 255, 200, 0.08), transparent 30%),
-                #050910;
-            color: #f4f8ff;
-            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        header {
+            background: #172033;
+            color: white;
+            padding: 25px;
+            text-align: center;
         }
 
         .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: auto;
-            padding: 30px 0 35px;
-        }
-
-        /* Header */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 38px;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .brand-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #008cff, #0066ff);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 25px;
-            font-weight: bold;
-            box-shadow: 0 0 25px rgba(0, 140, 255, 0.35);
-        }
-
-        .brand-text h2 {
-            font-size: 18px;
-            letter-spacing: 1px;
-        }
-
-        .brand-text p {
-            color: #7d91aa;
-            font-size: 12px;
-            margin-top: 3px;
-        }
-
-        .online {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border: 1px solid rgba(0, 255, 180, 0.35);
-            background: rgba(0, 255, 180, 0.06);
-            color: #00f0ad;
-            border-radius: 20px;
-            padding: 9px 16px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .online-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: #00f0ad;
-            box-shadow: 0 0 10px #00f0ad;
-        }
-
-        /* Heading */
-        .section-label {
-            color: #00aaff;
-            font-size: 11px;
-            font-weight: bold;
-            letter-spacing: 3px;
-            margin-bottom: 12px;
-        }
-
-        .title {
-            font-size: clamp(40px, 5vw, 64px);
-            line-height: 1;
-            margin-bottom: 15px;
-            letter-spacing: -2px;
-        }
-
-        .subtitle {
-            color: #8da2bd;
-            max-width: 720px;
-            line-height: 1.6;
-            font-size: 15px;
-            margin-bottom: 30px;
-        }
-
-        /* Student cards */
-        .students-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-            margin-bottom: 20px;
-        }
-
-        .student-card {
-            background: rgba(17, 29, 45, 0.82);
-            border: 1px solid rgba(110, 145, 180, 0.18);
-            border-radius: 20px;
-            padding: 24px;
-            min-height: 275px;
-            transition: 0.25s ease;
-        }
-
-        .student-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(0, 153, 255, 0.5);
-            box-shadow: 0 15px 40px rgba(0, 100, 255, 0.12);
-        }
-
-        .student-top {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .avatar {
-            width: 62px;
-            height: 62px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #112d49, #0b1828);
-            border: 1px solid rgba(0, 153, 255, 0.55);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            color: #27a8ff;
-            flex-shrink: 0;
-        }
-
-        .student-name {
-            font-size: 21px;
-            font-weight: 700;
-            margin-bottom: 7px;
-        }
-
-        .student-id {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 7px;
-            background: rgba(0, 153, 255, 0.12);
-            color: #00b7ff;
-            font-size: 11px;
-            font-weight: bold;
-        }
-
-        .details {
-            border-top: 1px solid rgba(130, 155, 180, 0.16);
-            padding-top: 17px;
-        }
-
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            font-size: 13px;
-        }
-
-        .detail-label {
-            color: #71849b;
-        }
-
-        .detail-value {
-            color: #e4edf8;
-            font-weight: 600;
-            text-align: right;
-        }
-
-        /* Bottom panels */
-        .bottom-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 18px;
-        }
-
-        .panel {
-            background: rgba(17, 29, 45, 0.82);
-            border: 1px solid rgba(110, 145, 180, 0.18);
-            border-radius: 18px;
+            max-width: 1000px;
+            margin: 30px auto;
             padding: 20px;
         }
 
-        .panel-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 15px;
-            font-weight: 700;
-            margin-bottom: 15px;
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
 
-        .panel-icon {
-            width: 30px;
-            height: 30px;
-            border-radius: 8px;
-            background: rgba(0, 153, 255, 0.13);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #00b7ff;
+        h2 {
+            margin-top: 0;
         }
 
-        .api-box,
-        .status-box {
-            background: #02060b;
-            border-radius: 10px;
-            padding: 14px;
-            font-family: Consolas, monospace;
-            font-size: 12px;
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
         }
 
-        .api-line {
-            margin: 5px 0;
+        input {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
         }
 
-        .method {
-            color: #00b7ff;
+        button {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 7px;
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #eef2ff;
+        }
+
+        .message {
+            margin-top: 15px;
             font-weight: bold;
-            margin-right: 8px;
         }
 
-        .endpoint {
-            color: #e6f0ff;
-        }
-
-        .status-box {
-            color: #00e7ad;
-            padding: 18px;
-        }
-
-        /* Footer */
-        .footer {
-            display: flex;
-            justify-content: space-between;
-            color: #52657c;
-            font-size: 11px;
-            margin-top: 24px;
-        }
-
-        /* Responsive */
-        @media (max-width: 900px) {
-            .students-grid {
+        @media(max-width: 700px) {
+            .form-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .student-card {
-                min-height: auto;
-            }
-        }
-
-        @media (max-width: 650px) {
-            .container {
-                width: 92%;
-                padding-top: 20px;
-            }
-
-            .header {
-                align-items: flex-start;
-                gap: 15px;
-            }
-
-            .online {
-                padding: 7px 10px;
-                font-size: 10px;
-            }
-
-            .title {
-                font-size: 42px;
-            }
-
-            .bottom-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer {
-                gap: 10px;
-                flex-direction: column;
             }
         }
     </style>
@@ -312,277 +100,187 @@
 
 <body>
 
+<header>
+    <h1>Student Management Portal</h1>
+    <p>Student Service • Port 5001</p>
+</header>
+
 <div class="container">
 
-    <!-- Header -->
-    <div class="header">
+    <div class="card">
 
-        <div class="brand">
-            <div class="brand-icon">S</div>
+        <h2>Add New Student</h2>
 
-            <div class="brand-text">
-                <h2>STUDENT SERVICE</h2>
-                <p>Microservice • Cloud Application</p>
+        <form id="studentForm">
+
+            <div class="form-grid">
+
+                <input
+                    type="number"
+                    id="student_id"
+                    placeholder="Student ID"
+                    required
+                >
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Student Name"
+                    required
+                >
+
+                <input
+                    type="text"
+                    id="branch"
+                    placeholder="Branch"
+                    required
+                >
+
+                <input
+                    type="number"
+                    id="year"
+                    placeholder="Year"
+                    min="1"
+                    max="6"
+                    required
+                >
+
             </div>
-        </div>
 
-        <div class="online">
-            <span class="online-dot"></span>
-            SERVICE ONLINE
-        </div>
+            <br>
+
+            <button type="submit">
+                Add Student
+            </button>
+
+        </form>
+
+        <div id="message" class="message"></div>
 
     </div>
 
 
-    <!-- Heading -->
-    <div class="section-label">
-        STUDENT MANAGEMENT
-    </div>
+    <div class="card">
 
-    <h1 class="title">
-        Student Profiles
-    </h1>
+        <h2>Students</h2>
 
-    <p class="subtitle">
-        A lightweight REST microservice responsible for retrieving
-        and managing student information.
-    </p>
+        <table>
 
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Branch</th>
+                    <th>Year</th>
+                </tr>
+            </thead>
 
-    <!-- ALL THREE STUDENTS -->
-    <div class="students-grid">
+            <tbody id="studentTable"></tbody>
 
-        <!-- Student 101 -->
-        <div class="student-card">
+        </table>
 
-            <div class="student-top">
-
-                <div class="avatar">
-                    👤
-                </div>
-
-                <div>
-                    <div class="student-name">
-                        Student 1
-                    </div>
-
-                    <span class="student-id">
-                        ID: 101
-                    </span>
-                </div>
-
-            </div>
-
-            <div class="details">
-
-                <div class="detail-row">
-                    <span class="detail-label">
-                        Department
-                    </span>
-
-                    <span class="detail-value">
-                        CSE-AI
-                    </span>
-                </div>
-
-                <div class="detail-row">
-                    <span class="detail-label">
-                        Academic Year
-                    </span>
-
-                    <span class="detail-value">
-                        Year 2
-                    </span>
-                </div>
-
-                <div class="detail-row">
-                    <span class="detail-label">
-                        Name
-                    </span>
-
-                    <span class="detail-value">
-                        Student 1
-                    </span>
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- Student 102 -->
-        <div class="student-card">
-
-            <div class="student-top">
-
-                <div class="avatar">
-                    👤
-                </div>
-
-                <div>
-                    <div class="student-name">
-                        Student 2
-                    </div>
-
-                    <span class="student-id">
-                        ID: 102
-                    </span>
-                </div>
-
-            </div>
-
-            <div class="details">
-
-                <div class="detail-row">
-                    <span class="detail-label">
-                        Department
-                    </span>
-
-                    <span class="detail-value">
-                        CSE
-                    </span>
-                </div>
-
-                <div class="detail-row">
-                    <span class="detail-label">
-                        Academic Year
-                    </span>
-
-                    <span class="detail-value">
-                        Year 3
-                    </span>
-                </div>
-
-                <div class="detail-row">
-                    <span class="detail-label">
-                        Name
-                    </span>
-
-                    <span class="detail-value">
-                        Student 2
-                    </span>
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- Student 103 -->
-        <div class="student-card">
-
-            <div class="student-top">
-
-                <div class="avatar">
-                    👤
-                </div>
-
-                <div>
-                    <div class="student-name">
-                        Student 3
-                    </div>
-
-                    <span class="student-id">
-                        ID: 103
-                    </span>
-                </div>
-
-            </div>
-
-            <div class="details">
-
-                <div class="detail-row">
-                    <span class="detail-label">
-                        Department
-                    </span>
-
-                    <span class="detail-value">
-                        ISE
-                    </span>
-                </div>
-
-                <div class="detail-row">
-                    <span class="detail-label">
-                        Academic Year
-                    </span>
-
-                    <span class="detail-value">
-                        Year 3
-                    </span>
-                </div>
-
-                <div class="detail-row">
-                    <span class="detail-label">
-                        Name
-                    </span>
-
-                    <span class="detail-value">
-                        Student 3
-                    </span>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- API + Runtime -->
-    <div class="bottom-grid">
-
-        <div class="panel">
-
-            <div class="panel-title">
-                <div class="panel-icon">⚡</div>
-                REST API
-            </div>
-
-            <div class="api-box">
-
-                <div class="api-line">
-                    <span class="method">GET</span>
-                    <span class="endpoint">/students/101</span>
-                </div>
-
-                <div class="api-line">
-                    <span class="method">GET</span>
-                    <span class="endpoint">/students/102</span>
-                </div>
-
-                <div class="api-line">
-                    <span class="method">GET</span>
-                    <span class="endpoint">/students/103</span>
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="panel">
-
-            <div class="panel-title">
-                <div class="panel-icon">◉</div>
-                Runtime Status
-            </div>
-
-            <div class="status-box">
-                Docker Container • RUNNING
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- Footer -->
-    <div class="footer">
-        <span>Microservice Architecture</span>
-        <span>Flask • Docker • REST API</span>
     </div>
 
 </div>
+
+
+<script>
+
+async function loadStudents() {
+
+    const response = await fetch("/students");
+
+    const students = await response.json();
+
+    const table = document.getElementById("studentTable");
+
+    table.innerHTML = "";
+
+    students.forEach(student => {
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${student.student_id}</td>
+            <td>${student.name}</td>
+            <td>${student.branch}</td>
+            <td>${student.year}</td>
+        `;
+
+        table.appendChild(row);
+
+    });
+}
+
+
+document
+    .getElementById("studentForm")
+    .addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const data = {
+
+            student_id:
+                document.getElementById("student_id").value,
+
+            name:
+                document.getElementById("name").value,
+
+            branch:
+                document.getElementById("branch").value,
+
+            year:
+                document.getElementById("year").value
+
+        };
+
+
+        const response = await fetch("/students", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(data)
+
+        });
+
+
+        const result = await response.json();
+
+        const message =
+            document.getElementById("message");
+
+
+        if (response.ok) {
+
+            message.style.color = "green";
+
+            message.textContent =
+                "Student added successfully!";
+
+            document.getElementById("studentForm").reset();
+
+            loadStudents();
+
+        } else {
+
+            message.style.color = "red";
+
+            message.textContent =
+                result.error || "Failed to add student";
+
+        }
+
+    });
+
+
+loadStudents();
+
+</script>
 
 </body>
 </html>

@@ -1,32 +1,62 @@
 services:
 
   student-service:
+
     image: student-service:1.0
+
     container_name: student-service
+
     ports:
       - "5001:5001"
+
+    volumes:
+      - student-data:/data
+
     networks:
       - microservice-network
+
 
   course-service:
+
     image: course-service:1.0
+
     container_name: course-service
+
     ports:
       - "5002:5002"
+
+    volumes:
+      - course-data:/data
+
     networks:
       - microservice-network
 
+
   enrollment-service:
+
     image: enrollment-service:1.0
+
     container_name: enrollment-service
+
     ports:
       - "5003:5003"
+
     environment:
-      STUDENT_SERVICE_URL: http://student-service:5001
-      COURSE_SERVICE_URL: http://course-service:5002
+
+      STUDENT_SERVICE_URL:
+        http://student-service:5001
+
+      COURSE_SERVICE_URL:
+        http://course-service:5002
+
+    volumes:
+      - enrollment-data:/data
+
     depends_on:
+
       - student-service
       - course-service
+
     networks:
       - microservice-network
 
@@ -34,4 +64,14 @@ services:
 networks:
 
   microservice-network:
+
     driver: bridge
+
+
+volumes:
+
+  student-data:
+
+  course-data:
+
+  enrollment-data:
