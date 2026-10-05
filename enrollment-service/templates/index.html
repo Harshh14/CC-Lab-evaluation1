@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Enrollment Service | Microservice</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(0, 140, 255, 0.12), transparent 30%),
+                radial-gradient(circle at 90% 80%, rgba(0, 255, 200, 0.08), transparent 30%),
+                #050910;
+            color: #f4f8ff;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 30px 0 35px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 38px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #008cff, #0066ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+            font-weight: bold;
+            box-shadow: 0 0 25px rgba(0, 140, 255, 0.35);
+        }
+
+        .brand-text h2 {
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+
+        .brand-text p {
+            color: #7d91aa;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        .online {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(0, 255, 180, 0.35);
+            background: rgba(0, 255, 180, 0.06);
+            color: #00f0ad;
+            border-radius: 20px;
+            padding: 9px 16px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .online-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #00f0ad;
+            box-shadow: 0 0 10px #00f0ad;
+        }
+
+        /* Heading */
+        .section-label {
+            color: #00aaff;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+        }
+
+        .title {
+            font-size: clamp(40px, 5vw, 64px);
+            line-height: 1;
+            margin-bottom: 15px;
+            letter-spacing: -2px;
+        }
+
+        .subtitle {
+            color: #8da2bd;
+            max-width: 760px;
+            line-height: 1.6;
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+
+        /* Enrollment cards */
+        .enrollment-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 20px;
+        }
+
+        .enrollment-card {
+            background: rgba(17, 29, 45, 0.82);
+            border: 1px solid rgba(110, 145, 180, 0.18);
+            border-radius: 20px;
+            padding: 24px;
+            min-height: 330px;
+            transition: 0.25s ease;
+        }
+
+        .enrollment-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 153, 255, 0.5);
+            box-shadow: 0 15px 40px rgba(0, 100, 255, 0.12);
+        }
+
+        /* Student section */
+        .student-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .student-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #112d49, #0b1828);
+            border: 1px solid rgba(0, 153, 255, 0.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            color: #27a8ff;
+            flex-shrink: 0;
+        }
+
+        .student-name {
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .student-id {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 7px;
+            background: rgba(0, 153, 255, 0.12);
+            color: #00b7ff;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        /* Arrow */
+        .enrolled-arrow {
+            text-align: center;
+            color: #00aaff;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin: 12px 0;
+        }
+
+        .arrow-line {
+            color: #00b7ff;
+            font-size: 18px;
+            margin-top: 3px;
+        }
+
+        /* Course section */
+        .course-section {
+            background: rgba(0, 140, 255, 0.055);
+            border: 1px solid rgba(0, 153, 255, 0.12);
+            border-radius: 13px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .course-label {
+            color: #71849b;
+            font-size: 10px;
+            letter-spacing: 2px;
+            margin-bottom: 7px;
+        }
+
+        .course-name {
+            font-size: 17px;
+            font-weight: 700;
+            line-height: 1.35;
+            margin-bottom: 8px;
+        }
+
+        .course-id {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 6px;
+            background: rgba(0, 153, 255, 0.12);
+            color: #00b7ff;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        /* Department */
+        .department {
+            border-top: 1px solid rgba(130, 155, 180, 0.16);
+            padding-top: 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .department-label {
+            color: #71849b;
+            font-size: 12px;
+        }
+
+        .department-value {
+            color: #e4edf8;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        /* Bottom panels */
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .panel {
+            background: rgba(17, 29, 45, 0.82);
+            border: 1px solid rgba(110, 145, 180, 0.18);
+            border-radius: 18px;
+            padding: 20px;
+        }
+
+        .panel-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .panel-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: rgba(0, 153, 255, 0.13);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00b7ff;
+        }
+
+        .api-box,
+        .status-box {
+            background: #02060b;
+            border-radius: 10px;
+            padding: 14px;
+            font-family: Consolas, monospace;
+            font-size: 12px;
+        }
+
+        .api-line {
+            margin: 5px 0;
+        }
+
+        .method {
+            color: #00b7ff;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .endpoint {
+            color: #e6f0ff;
+        }
+
+        .status-box {
+            color: #00e7ad;
+            padding: 18px;
+        }
+
+        /* Footer */
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            color: #52657c;
+            font-size: 11px;
+            margin-top: 24px;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .enrollment-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .enrollment-card {
+                min-height: auto;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .container {
+                width: 92%;
+                padding-top: 20px;
+            }
+
+            .header {
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .online {
+                padding: 7px 10px;
+                font-size: 10px;
+            }
+
+            .title {
+                font-size: 42px;
+            }
+
+            .bottom-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer {
+                gap: 10px;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <div class="header">
+
+        <div class="brand">
+            <div class="brand-icon">E</div>
+
+            <div class="brand-text">
+                <h2>ENROLLMENT SERVICE</h2>
+                <p>Microservice • Cloud Application</p>
+            </div>
+        </div>
+
+        <div class="online">
+            <span class="online-dot"></span>
+            SERVICE ONLINE
+        </div>
+
+    </div>
+
+
+    <!-- Heading -->
+    <div class="section-label">
+        ENROLLMENT MANAGEMENT
+    </div>
+
+    <h1 class="title">
+        Student Enrollments
+    </h1>
+
+    <p class="subtitle">
+        Connects students with their enrolled courses by communicating
+        with the Student Service and Course Service microservices.
+    </p>
+
+
+    <!-- Enrollment Cards -->
+    <div class="enrollment-grid">
+
+        <!-- Enrollment 1 -->
+        <div class="enrollment-card">
+
+            <div class="student-section">
+
+                <div class="student-icon">
+                    👤
+                </div>
+
+                <div>
+                    <div class="student-name">
+                        Student One
+                    </div>
+
+                    <span class="student-id">
+                        ID: 101
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="enrolled-arrow">
+                ENROLLED IN
+                <div class="arrow-line">
+                    ↓
+                </div>
+            </div>
+
+
+            <div class="course-section">
+
+                <div class="course-label">
+                    COURSE
+                </div>
+
+                <div class="course-name">
+                    Cloud Computing
+                </div>
+
+                <span class="course-id">
+                    CC301
+                </span>
+
+            </div>
+
+
+            <div class="department">
+
+                <span class="department-label">
+                    Department
+                </span>
+
+                <span class="department-value">
+                    CSE-AI
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Enrollment 2 -->
+        <div class="enrollment-card">
+
+            <div class="student-section">
+
+                <div class="student-icon">
+                    👤
+                </div>
+
+                <div>
+                    <div class="student-name">
+                        Student Two
+                    </div>
+
+                    <span class="student-id">
+                        ID: 102
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="enrolled-arrow">
+                ENROLLED IN
+                <div class="arrow-line">
+                    ↓
+                </div>
+            </div>
+
+
+            <div class="course-section">
+
+                <div class="course-label">
+                    COURSE
+                </div>
+
+                <div class="course-name">
+                    Parallel Computing &amp; GPU
+                </div>
+
+                <span class="course-id">
+                    PC302
+                </span>
+
+            </div>
+
+
+            <div class="department">
+
+                <span class="department-label">
+                    Department
+                </span>
+
+                <span class="department-value">
+                    CSE
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Enrollment 3 -->
+        <div class="enrollment-card">
+
+            <div class="student-section">
+
+                <div class="student-icon">
+                    👤
+                </div>
+
+                <div>
+                    <div class="student-name">
+                        Student Three
+                    </div>
+
+                    <span class="student-id">
+                        ID: 103
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="enrolled-arrow">
+                ENROLLED IN
+                <div class="arrow-line">
+                    ↓
+                </div>
+            </div>
+
+
+            <div class="course-section">
+
+                <div class="course-label">
+                    COURSE
+                </div>
+
+                <div class="course-name">
+                    Cryptography &amp; Network Security
+                </div>
+
+                <span class="course-id">
+                    CNS303
+                </span>
+
+            </div>
+
+
+            <div class="department">
+
+                <span class="department-label">
+                    Department
+                </span>
+
+                <span class="department-value">
+                    ISE
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- API + Runtime -->
+    <div class="bottom-grid">
+
+        <div class="panel">
+
+            <div class="panel-title">
+                <div class="panel-icon">⚡</div>
+                REST API
+            </div>
+
+            <div class="api-box">
+
+                <div class="api-line">
+                    <span class="method">GET</span>
+                    <span class="endpoint">/enrollment/101</span>
+                </div>
+
+                <div class="api-line">
+                    <span class="method">GET</span>
+                    <span class="endpoint">/enrollment/102</span>
+                </div>
+
+                <div class="api-line">
+                    <span class="method">GET</span>
+                    <span class="endpoint">/enrollment/103</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="panel">
+
+            <div class="panel-title">
+                <div class="panel-icon">◉</div>
+                Microservice Communication
+            </div>
+
+            <div class="status-box">
+                Student Service : 5001
+                <br><br>
+                Course Service : 5002
+                <br><br>
+                Enrollment Service : 5003
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Footer -->
+    <div class="footer">
+        <span>Microservice Architecture</span>
+        <span>Flask • Docker • REST API</span>
+    </div>
+
+</div>
+
+</body>
+</html>
